@@ -11,7 +11,7 @@ const MarketingApp = () => {
     }, [content]);
 
     return (
-        <div>test
+        <div>
             <div ref={content} />
         </div>
     );
