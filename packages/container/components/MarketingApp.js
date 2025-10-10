@@ -6,7 +6,6 @@ const MarketingApp = () => {
     useEffect(() => {
         if (content.current) {
             mount(content.current);
-            console.log(mount);
         }
     }, [content]);
 
