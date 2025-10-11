@@ -1,21 +1,22 @@
 import React from "react";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import MarketingApp from "../components/MarketingApp";
+import Header from "../components/Header";
 
 const App = () => {
     return (
-        <div>
-            <BrowserRouter>
+        <BrowserRouter>
+            <div>
                 <Switch>
                     <Route exact path="/"></Route>
                     <Route exact path="/marketing">
                     </Route>
                 </Switch>
-            Container
-            <Link to="/marketing">Marketing</Link>
+                {/* <Link to="/marketing">Marketing</Link> */}
+                <Header />
                 <MarketingApp />
-            </BrowserRouter>
-        </div>
+            </div>
+        </BrowserRouter>
     );
 };
 
