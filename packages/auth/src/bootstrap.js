@@ -22,14 +22,14 @@ const mount = (el, { onNavigate, defaultHistory, initialPath }) => {
             const { pathname } = history.location;
             if (pathname !== nextPathname) {
                 history.push(nextPathname);
-                console.log("Marketing App - Container onParentNavigate", nextPathname);
+                //console.log("Marketing App - Container onParentNavigate", nextPathname);
             }
         }
     }
 };
 
 if (process.env.NODE_ENV === 'development') {
-    const el = document.querySelector('#_marketing-dev-root');
+    const el = document.querySelector('#_auth-dev-root');
 
     if (el) {
         mount(el, { defaultHistory: createBrowserHistory() });
