@@ -1,6 +1,7 @@
-import React, { lazy, Suspense, useState } from "react";
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import React, { lazy, Suspense, useState, useEffect } from "react";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
 import { StylesProvider, createGenerateClassName } from "@material-ui/core/styles";
+import { createBrowserHistory } from "history";
 import Header from "./components/Header";
 import Progress from "./components/Progress";
 const AuthApp = lazy(() => import("./components/AuthApp"));
@@ -10,28 +11,39 @@ const DashboardApp = lazy(() => import("./components/DashboardApp"));
 const generateClassName = createGenerateClassName({
     productionPrefix: 'co'
 });
+const history = createBrowserHistory();
 
 const App = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
     // add auth provider here later or redux
+
+    useEffect(() => {
+        if (isSignedIn) {
+            history.push('/dashboard');
+        }
+    }, [isSignedIn]);
+
     return (
-        <BrowserRouter>
+        <Router history={history}>
             <StylesProvider generateClassName={generateClassName}>
                 <div>
                     <Header signedIn={isSignedIn} onSignOut={() => setIsSignedIn(false)} />
-                        <Link to="/dashboard">Dashboard</Link>
                     <Suspense fallback={<Progress />}>
                         <Switch>
                             <Route path="/auth">
                                 <AuthApp onSignIn={() => setIsSignedIn(true)} />
                             </Route>
-                            <Route path="/dashboard" component={DashboardApp}></Route>
+                            <Route path="/dashboard">
+                                {!isSignedIn && <Redirect to="/" />}
+                                <DashboardApp />
+                            </Route>
                             <Route path="/" component={MarketingApp}></Route>
+
                         </Switch>
                     </Suspense>
                 </div>
             </StylesProvider>
-        </BrowserRouter>
+        </Router>
     );
 };
 
