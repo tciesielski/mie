@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { mount } from "auth/AuthApp";
 
-const AuthApp = () => {
+const AuthApp = ({onSignIn}) => {
     const content = useRef(null); 
     const history = useHistory();
 
@@ -16,7 +16,10 @@ const AuthApp = () => {
                         console.log("Container App - Auth onNavigate", nextPathname);
                     }
                 },
-                initialPath: history.location.pathname
+                initialPath: history.location.pathname,
+                onSignIn: (isSignedIn) => {
+                    onSignIn(isSignedIn);
+                }
             });
             history.listen(onParentNavigate);
         }
