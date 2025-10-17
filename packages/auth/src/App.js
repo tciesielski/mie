@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react";
 import { Router, Route, Routes } from "react-router-dom";
-import { StyledEngineProvider } from "@mui/material/styles";
+// Update this import for MUI v7
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import SignIn from "./components/Signin";
 import SignUp from "./components/Signup";
 
-export default ({ history, onSignIn }) => {
+// Create a default theme
+const theme = createTheme();
+
+// Fix the arrow function syntax (using proper named function)
+export default function App({ history, onSignIn }) {
     const [location, setLocation] = useState(history.location);
 
     useEffect(() => {
@@ -15,20 +21,16 @@ export default ({ history, onSignIn }) => {
 
         return unlisten; // Clean up the listener on unmount
     }, [history]);
+    
     return (
-        <div>
-            <StyledEngineProvider injectFirst>
-                <Router location={location} navigator={history}>
-                    <Routes>
-                        <Route path="/auth/signin">
-                            <SignIn onSignIn={onSignIn} />
-                        </Route>
-                        <Route path="/auth/signup">
-                            <SignUp onSignIn={onSignIn} />
-                        </Route>
-                    </Routes>
-                </Router>
-            </StyledEngineProvider>
-        </div>
-    )
-};
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Router location={location} navigator={history}>
+                <Routes>
+                    <Route path="/auth/signin" element={<SignIn onSignIn={onSignIn} />} />
+                    <Route path="/auth/signup" element={<SignUp onSignIn={onSignIn} />} />
+                </Routes>
+            </Router>
+        </ThemeProvider>
+    );
+}

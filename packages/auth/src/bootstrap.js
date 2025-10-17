@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { createMemoryHistory, createBrowserHistory } from 'history';
 import App from './App';
 
@@ -11,10 +11,8 @@ const mount = (el, { onNavigate, defaultHistory, initialPath, onSignIn }) => {
         history.listen(onNavigate);
     }
 
-    ReactDOM.render(
-        <App history={history} onSignIn={onSignIn} />,
-        el
-    );
+    const root = createRoot(el);
+    root.render(<App history={history} onSignIn={onSignIn} />);
 
     return {
         onParentNavigate: ({pathname: nextPathname}) => {

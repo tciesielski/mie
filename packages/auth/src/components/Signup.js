@@ -1,5 +1,6 @@
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -7,15 +8,15 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import { Link } from 'react-router-dom';
+import { styled } from '@mui/material/styles';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link to="/">Your Website</Link> {new Date().getFullYear()}
+      <Link to="/" style={{ textDecoration: 'none' }}>Your Website</Link> {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
@@ -58,7 +59,11 @@ export default function SignUp({ onSignIn }) {
           noValidate
         >
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid
+              size={{
+                xs: 12,
+                sm: 6
+              }}>
               <TextField
                 autoComplete="fname"
                 name="firstName"
@@ -70,7 +75,11 @@ export default function SignUp({ onSignIn }) {
                 autoFocus
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid
+              size={{
+                xs: 12,
+                sm: 6
+              }}>
               <TextField
                 variant="outlined"
                 required
@@ -81,7 +90,7 @@ export default function SignUp({ onSignIn }) {
                 autoComplete="lname"
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 variant="outlined"
                 required
@@ -92,7 +101,7 @@ export default function SignUp({ onSignIn }) {
                 autoComplete="email"
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 variant="outlined"
                 required
@@ -104,7 +113,7 @@ export default function SignUp({ onSignIn }) {
                 autoComplete="current-password"
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="I want to receive inspiration, marketing promotions and updates via email."
@@ -121,7 +130,7 @@ export default function SignUp({ onSignIn }) {
             Sign Up
           </SubmitButton>
           <Grid container justifyContent="flex-end">
-            <Grid item>
+            <Grid>
               <Link to="/auth/signin">Already have an account? Sign in</Link>
             </Grid>
           </Grid>

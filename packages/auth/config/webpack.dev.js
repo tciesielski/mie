@@ -4,6 +4,30 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
 const commonConfig = require('./webpack.common');
 const packageJson = require('../package.json');
 
+const deps = packageJson.dependencies;
+const sharedDeps = Object.keys(deps).reduce((acc, dep) => {
+  // Skip Emotion packages
+  if (dep.includes('@emotion')) {
+    return acc;
+  }
+  
+  // Configure React and React DOM as singletons
+  if (dep === 'react' || dep === 'react-dom') {
+    acc[dep] = {
+      singleton: true,
+      requiredVersion: deps[dep],
+    };
+  } else {
+    // Share other dependencies normally
+    acc[dep] = {
+      requiredVersion: deps[dep],
+    };
+  }
+  
+  return acc;
+}, {});
+
+
 const devConfig = {
     mode: 'development',
     // output: {
@@ -24,7 +48,7 @@ const devConfig = {
             exposes: {
                 './AuthApp': './src/bootstrap'
             },
-            shared: packageJson.dependencies
+            shared: sharedDeps
         })
     ]
 };
