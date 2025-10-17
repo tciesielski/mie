@@ -1,7 +1,10 @@
 const { merge } = require('webpack-merge');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
-const commonConfig = require('./webpack.common');
+const webpackCommon = require('./webpack.common');
 const packageJson = require('../package.json');
+
+const { commonConfig, createSharedDeps } = webpackCommon;
+const sharedDeps = createSharedDeps(packageJson.dependencies);
 
 const prodConfig = {
     mode: 'production',
@@ -16,7 +19,7 @@ const prodConfig = {
             exposes: {
                 './AuthApp': './src/bootstrap'
             },
-            shared: packageJson.dependencies
+            shared: sharedDeps
         })
     ]
 };

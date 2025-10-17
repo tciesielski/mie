@@ -1,31 +1,11 @@
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
-const commonConfig = require('./webpack.common');
+const webpackCommon = require('./webpack.common');
 const packageJson = require('../package.json');
 
-const deps = packageJson.dependencies;
-const sharedDeps = Object.keys(deps).reduce((acc, dep) => {
-  // Skip Emotion packages
-  if (dep.includes('@emotion')) {
-    return acc;
-  }
-  
-  // Configure React and React DOM as singletons
-  if (dep === 'react' || dep === 'react-dom') {
-    acc[dep] = {
-      singleton: true,
-      requiredVersion: deps[dep],
-    };
-  } else {
-    // Share other dependencies normally
-    acc[dep] = {
-      requiredVersion: deps[dep],
-    };
-  }
-  
-  return acc;
-}, {});
+const { commonConfig, createSharedDeps } = webpackCommon;
+const sharedDeps = createSharedDeps(packageJson.dependencies);
 
 
 const devConfig = {
