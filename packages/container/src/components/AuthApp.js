@@ -1,34 +1,35 @@
-import React, { useEffect, useRef } from "react";
-import { useHistory } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { mount } from "auth/AuthApp";
 
-const AuthApp = ({onSignIn}) => {
-    const content = useRef(null); 
-    const history = useHistory();
+const AuthApp = ({ onSignIn }) => {
+    const content = useRef(null);
+    const onParentNavigateRef = useRef(null);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
-        if (content.current) {
-            const { onParentNavigate } = mount(content.current, {
-                onNavigate: ({ pathname: nextPathname }) => {
-                    const { pathname } = history.location;
-                    if (pathname !== nextPathname) {
-                        history.push(nextPathname);
-                        console.log("Container App - Auth onNavigate", nextPathname);
-                    }
-                },
-                initialPath: history.location.pathname,
-                onSignIn: (isSignedIn) => {
-                    onSignIn(isSignedIn);
-                }
-            });
-            history.listen(onParentNavigate);
-        }
+        const { onParentNavigate } = mount(content.current, {
+            onNavigate: ({ pathname: nextPathname }) => {
+                navigate(nextPathname);
+            },
+            initialPath: location.pathname,
+            onSignIn: (isSignedIn) => {
+                onSignIn(isSignedIn);
+            }
+        });
+        onParentNavigateRef.current = onParentNavigate;
     }, []);
 
+      // Sync navigation from container to child
+      useEffect(() => {
+        if (onParentNavigateRef.current) {
+          onParentNavigateRef.current({ pathname: location.pathname });
+        }
+      }, [location]); // Only run when location changes
+
     return (
-        <div>
-            <div ref={content} />
-        </div>
+        <div ref={content} />
     );
 };
 export default AuthApp;
