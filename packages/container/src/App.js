@@ -25,7 +25,7 @@ const App = () => {
                     <Routes>
                         <Route path="/auth/*" element={<AuthApp onSignIn={handleSignIn} />} />
                         {/* <Route path="/dashboard" element={!isSignedIn ? <Navigate to="/" /> : <DashboardApp />} /> */}
-                        {/* <Route path="/" element={MarketingApp}></Route> */}
+                        <Route path="/*" element={<MarketingApp />}></Route>
 
                     </Routes>
                 </Suspense>

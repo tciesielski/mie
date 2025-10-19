@@ -8,7 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 function createSharedDeps(dependencies) {
     return Object.keys(dependencies).reduce((acc, dep) => {
         // Skip Emotion packages
-        if (dep.includes('@emotion')) {
+        if (dep.includes('@emotion/styled')) {
             return acc;
         }
 

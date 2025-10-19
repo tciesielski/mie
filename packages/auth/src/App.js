@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Router, Route, Routes } from "react-router-dom";
-// Update this import for MUI v7
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import SignIn from "./components/Signin";
