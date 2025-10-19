@@ -17,10 +17,10 @@ const mount = (el, { onNavigate, defaultHistory, initialPath, onSignIn }) => {
     return {
         onParentNavigate: ({pathname: nextPathname}) => {
             const { pathname } = history.location;
-            // if (pathname !== nextPathname) {
-            //     history.push(nextPathname);
-            //     //console.log("Marketing App - Container onParentNavigate", nextPathname);
-            // }
+            if (pathname !== nextPathname) {
+                history.push(nextPathname);
+                //console.log("Marketing App - Container onParentNavigate", nextPathname);
+            }
         }
     }
 };

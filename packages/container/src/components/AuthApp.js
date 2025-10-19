@@ -10,7 +10,7 @@ const AuthApp = ({ onSignIn }) => {
 
     useEffect(() => {
         const { onParentNavigate } = mount(content.current, {
-            onNavigate: ({ pathname: nextPathname }) => {
+            onNavigate: ({ location: { pathname: nextPathname }}) => {
                 navigate(nextPathname);
             },
             initialPath: location.pathname,
