@@ -20,11 +20,11 @@ const App = () => {
     return (
         <StyledEngineProvider injectFirst>
             <div>
-                <Header signedIn={isSignedIn} onSignOut={() => setIsSignedIn(false)} />
+                <Header isSignedIn={isSignedIn} onSignOut={() => setIsSignedIn(false)} />
                 <Suspense fallback={<Progress />}>
                     <Routes>
                         <Route path="/auth/*" element={<AuthApp onSignIn={handleSignIn} />} />
-                        {/* <Route path="/dashboard" element={!isSignedIn ? <Navigate to="/" /> : <DashboardApp />} /> */}
+                        <Route path="/dashboard" element={!isSignedIn ? <Navigate to="/" /> : <DashboardApp />} />
                         <Route path="/*" element={<MarketingApp />}></Route>
 
                     </Routes>

@@ -1,19 +1,17 @@
-// import React, { useEffect, useRef } from "react";
-// import { mount } from "dashboard/DashboardApp";
+import { useEffect, useRef } from "react";
+import { mount } from "dashboard/DashboardApp";
 
-// const DashboardApp = () => {
-//     const content = useRef(null); 
+const DashboardApp = () => {
+    const content = useRef(null); 
 
-//     useEffect(() => {
-//         if (content.current) {
-//             mount(content.current);
-//         }
-//     }, []);
+    useEffect(() => {
+        if (content.current) {
+            mount(content.current);
+        }
+    }, []);
 
-//     return (
-//         <div>
-//             <div ref={content} />
-//         </div>
-//     );
-// };
-// export default DashboardApp;
+    return (
+        <div ref={content} />
+    );
+};
+export default DashboardApp;
